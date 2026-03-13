@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: macos-14
+    steps:
+      - name: Checkout AcornDiskWorker
+        uses: actions/checkout@v4
+        with:
+          path: AcornDiskWorker
+
+      - name: Checkout Acorn
+        uses: actions/checkout@v4
+        with:
+          repository: treehauslabs/Acorn
+          path: Acorn
+
+      - name: Build
+        working-directory: AcornDiskWorker
+        run: swift build
+
+      - name: Test
+        working-directory: AcornDiskWorker
+        run: swift test
